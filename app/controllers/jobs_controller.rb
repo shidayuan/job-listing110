@@ -3,11 +3,16 @@ class JobsController < ApplicationController
 
 
   def show
-     @jobs = Job.where(:is_hidden => false).order("created_at DESC")
+   @job = Job.find(params[:id])
+
+   if @job.is_hidden
+     flash[:warning] = "This Job already archived"
+     redirect_to root_path
+   end
  end
 
  def index
-    @jobs = Job.all
+    @jobs = Job.where(:is_hidden => false).order("created_at DESC")
   end
 
   def new
