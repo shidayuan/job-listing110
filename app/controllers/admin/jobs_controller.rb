@@ -4,6 +4,14 @@ class Admin::JobsController < ApplicationController
    layout "admin"
 
 
+   def require_is_admin
+       if current_user.email != '985258517@qq.com'
+         flash[:alert] = 'You are not admin'
+         redirect_to root_path
+       end
+     end
+
+
   def show
     @job = Job.find(params[:id])
   end
